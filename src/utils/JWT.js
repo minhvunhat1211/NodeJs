@@ -4,8 +4,8 @@ module.exports.sign = async (user) => {
     const JWT_SECRET = 'qemsaslvjd-33r3:9i9vis3.'
     return new Promise((resolve,reject) => {
         jwt.sign({
-            username:user.username,
-            email: user.email
+            TenDangNhap:user.TenDangNhap,
+            TenHienThi: user.TenHienThi
         },JWT_SECRET,(err,token) => {
             if(err)
                 return reject(err)

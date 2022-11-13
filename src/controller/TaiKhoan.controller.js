@@ -113,7 +113,6 @@ exports.login = async (req, res) => {
           
       // delete user.dataValues.MatKhau
       user.dataValues.token = await sign({TenDangNhap: user.dataValues.TenDangNhap,
-                                          MatKhau:user.dataValues.MatKhau,
                                           TenHienThi:user.dataValues.TenHienThi
                                         })
 
