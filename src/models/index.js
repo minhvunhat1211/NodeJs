@@ -20,4 +20,5 @@ db.sequelize = sequelize;
 
 // db.users = require("./user.models")(sequelize, Sequelize);
 db.TaiKhoans = require("./TaiKhoan.models")(sequelize, Sequelize);
+db.ChuDe = require("./ChuDe.models")(sequelize, Sequelize);
 module.exports = db;

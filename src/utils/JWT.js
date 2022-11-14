@@ -21,7 +21,6 @@ module.exports.decode = async (token) => {
         jwt.verify(token,JWT_SECRET,(err,decoded) => {
             if(err)
                 return reject(err)
-
             return resolve(decoded)
         })
     })
