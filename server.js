@@ -42,6 +42,7 @@ app.get("/", (req, res) => {
 // require("./src/User.router")(app);
 require("./src/routes/TaiKhoan.router")(app);
 require("./src/routes/ChuDe.router")(app);
+require("./src/routes/BaiDang.router")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

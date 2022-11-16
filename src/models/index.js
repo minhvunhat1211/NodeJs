@@ -1,5 +1,4 @@
 const dbConfig = require("../config/db_config");
-
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
@@ -21,4 +20,5 @@ db.sequelize = sequelize;
 // db.users = require("./user.models")(sequelize, Sequelize);
 db.TaiKhoans = require("./TaiKhoan.models")(sequelize, Sequelize);
 db.ChuDe = require("./ChuDe.models")(sequelize, Sequelize);
+db.BaiDang = require("./BaiDang.models")(sequelize, Sequelize);
 module.exports = db;
