@@ -21,4 +21,6 @@ db.sequelize = sequelize;
 db.TaiKhoans = require("./TaiKhoan.models")(sequelize, Sequelize);
 db.ChuDe = require("./ChuDe.models")(sequelize, Sequelize);
 db.BaiDang = require("./BaiDang.models")(sequelize, Sequelize);
+db.BinhLuan = require("./BinhLuan.models")(sequelize, Sequelize);
+db.BaoCao = require("./BaoCao.models")(sequelize, Sequelize);
 module.exports = db;
