@@ -1,6 +1,8 @@
 const db = require("../models");
 const BinhLuan = db.BinhLuan;
+const Img_BinhLuan = db.Img_BinhLuan;
 const auth = require("../middleware/auth");
+const cloudinary = require("cloudinary");
 exports.create = async (req, res) => {
   let token = req.headers.authorization;
   let user = await auth.getuser(token);
@@ -10,6 +12,13 @@ exports.create = async (req, res) => {
     });
 		return;
 	}
+	const listImg = req.files;
+  let listUrl = [];
+	for (item in listImg) {
+    const result = await cloudinary.v2.uploader.upload(listImg[item].path);
+    listUrl.push(result.secure_url)
+    console.log(result.secure_url);
+  }
   BinhLuan.create({
     NoiDung: req.body.NoiDung,
     idBaiDang: req.params.idBaiDang,
@@ -17,6 +26,15 @@ exports.create = async (req, res) => {
     isEnable: true
   })
   .then(data =>{
+		const idBinhLuan = data.id;
+		console.log(idBinhLuan);
+		for(url in listUrl){
+			Img_BinhLuan.create({
+				idBinhLuan: idBinhLuan,
+				filePath: listUrl[url],
+				createBy: user.TenDangNhap
+			})
+		}
     res.json({
       data: data
     })
