@@ -1,6 +1,7 @@
 const db = require("../models");
 const BinhLuan = db.BinhLuan;
 const Img_BinhLuan = db.Img_BinhLuan;
+BinhLuan.hasMany(Img_BinhLuan,{foreignKey:"idBinhLuan"});
 const auth = require("../middleware/auth");
 const cloudinary = require("cloudinary");
 exports.create = async (req, res) => {
@@ -81,7 +82,10 @@ exports.softDelete = (req, res) => {
 };
 exports.getAll = (req, res) => {
 	BinhLuan.findAll({
-			where:{isEnable:true}
+			where:{isEnable:true},
+			include: [
+				Img_BinhLuan
+			]
 	})
 			.then(data =>{
 					res.json({ 

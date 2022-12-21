@@ -119,7 +119,7 @@ exports.login = async (req, res) => {
       res.status(200).json({token: user.dataValues.token});
   }catch(e){
       const status = res.statusCode ? res.statusCode : 500
-      res.status(status).json({errors: { body: [ 'Could not create user ', e.message ] }})
+      res.status(status).json({errors: { body: [ e.message ] }})
   }
 }
 
