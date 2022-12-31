@@ -6,7 +6,8 @@ module.exports = app => {
     var router = require("express").Router();
     router.post("/create/idChuDe/:idChuDe",auth.authByToken,upload.array("file"), BaiDang.create);
     router.put("/update/idBaiDang/:id",auth.authByToken, BaiDang.update);
-    router.put("/delete/idBaiDang/:id",auth.authByToken, BaiDang.softDelete);
-    router.get("/findAll" ,auth.authByToken, BaiDang.getAll);
+    router.delete("/delete/idBaiDang/:id",auth.authByToken, BaiDang.softDelete);
+    router.get("/findAll/idChuDe/:idChuDe" ,auth.authByToken, BaiDang.getAll);
+    router.get("/findById/idBaiDang/:idBaiDang" ,auth.authByToken, BaiDang.findById);
     app.use('/api/baidang', router);
 }

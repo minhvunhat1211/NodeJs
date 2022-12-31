@@ -5,7 +5,11 @@ module.exports.sign = async (user) => {
     return new Promise((resolve,reject) => {
         jwt.sign({
             TenDangNhap:user.TenDangNhap,
-            TenHienThi: user.TenHienThi
+            TenHienThi: user.TenHienThi,
+            Avatar: user.Avatar,
+            Role: user.Role,
+            SoLuongBaiDang: user.SoLuongBaiDang,
+            NgayGiaNhap: user.NgayGiaNhap
         },JWT_SECRET,(err,token) => {
             if(err)
                 return reject(err)

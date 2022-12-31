@@ -99,3 +99,50 @@ exports.getAll = (req, res) => {
 					});
 				});
 };
+exports.findById = (req, res) => {
+	const idBaiDang = req.params.idBaiDang;
+	console.log(idBaiDang);
+	BinhLuan.findAll({
+			where:{
+				isEnable:true,
+				idBaiDang: idBaiDang
+			},
+			include: [
+				Img_BinhLuan
+			]
+	})
+			.then(data =>{
+					res.status(200).send({ 
+							data: data
+					})
+			})
+			.catch(err => {
+					res.status(500).send({
+						message:
+							err.message || "Some error occurred while creating the account."
+					});
+				});
+};
+
+exports.findByBinhLuan = (req, res) => {
+	BinhLuan.findAll({
+			where:{
+				isEnable:true,
+				id: req.params.id
+			},
+			include: [
+				Img_BinhLuan
+			]
+	})
+			.then(data =>{
+					res.status(200).send({ 
+							data: data
+					})
+			})
+			.catch(err => {
+					res.status(500).send({
+						message:
+							err.message || "Some error occurred while creating the account."
+					});
+				});
+};
