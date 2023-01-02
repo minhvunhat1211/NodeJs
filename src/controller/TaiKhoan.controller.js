@@ -3,6 +3,8 @@ const TaiKhoan = db.TaiKhoans;
 const bcrypt = require("bcryptjs")
 const {matchPassword} = require('../utils/password')
 const {sign,decode} = require('../utils/JWT')
+const auth = require("../middleware/auth")
+const cloudinary = require("cloudinary")
 exports.create = (req, res) => {
   // hash password
   let salt = bcrypt.genSaltSync(10)
@@ -89,4 +91,74 @@ exports.login = async (req, res) => {
       res.status(status).json({ error: e.message })
   }
 }
+
+exports.getUserByUsername = async (req, res) => {
+  let token = req.headers.authorization;
+  let user = await auth.getuser(token);
+  let userName = user.TenDangNhap;
+  TaiKhoan.findAll({
+    where:{TenDangNhap:userName}
+    })
+    .then(data =>{
+        res.status(200).send({ 
+            data: data
+        })
+    })
+    .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the account."
+        });
+      });
+}
+exports.getUserByUsername2 = async (req, res) => {
+  TaiKhoan.findAll({
+    where:{TenDangNhap:req.params.TenDangNhap}
+    })
+    .then(data =>{
+        res.status(200).send({ 
+            data: data
+        })
+    })
+    .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the account."
+        });
+      });
+}
+exports.changeProfile = async (req, res) => {
+  let token = req.headers.authorization;
+  let user = await auth.getuser(token);
+  const listImg = req.files;
+  let listUrl = [];
+	for (item in listImg) {
+    const result = await cloudinary.v2.uploader.upload(listImg[item].path);
+    listUrl.push(result.secure_url)
+    console.log("Anh avatar");
+  }
+  let tenHienThi = "";
+  if(req.body.TenHienThi == ""){
+    tenHienThi = user.TenHienThi
+  }
+  else{
+    tenHienThi = req.body.TenHienThi
+  }
+  console.log(tenHienThi)
+  TaiKhoan.update(
+    {
+      TenHienThi: tenHienThi,
+      Avatar: listUrl[0]
+    },
+    {
+    where: {TenDangNhap: user.TenDangNhap},
+})
+  .then(data =>{
+    res.status(201).send({
+      data: user
+    })
+  })
+  .catch(err => {res.status(401).json({error:"Lỗi"})})
+}
+
 
